@@ -1,0 +1,19 @@
+Wierzcho³ek pocz¹tkowy: 8
+8 -> 2 : 1 
+8 -> 2 -> 6 : 6 
+8 -> 2 -> 6 -> 9 : 8 
+8 -> 13 : 8 
+
+Wierzcho³ek pocz¹tkowy: 2
+2 -> 6 : 5 
+2 -> 6 -> 9 : 7 
+2 -> 6 -> 9 -> 13 : 10 
+2 -> 8 : 3 
+
+Wierzcho³ek pocz¹tkowy: 13
+
+Wierzcho³ek pocz¹tkowy: 9
+9 -> 13 : 3 
+
+Wierzcho³ek -5 nie wystêpuje w grafie. 
+

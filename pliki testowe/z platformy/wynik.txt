@@ -1,0 +1,12 @@
+Wierzcho³ek pocz¹tkowy: 2
+2 -> 5 -> 3 : 37.05 
+2 -> 5 -> 3 -> 12 : 38.05 
+2 -> 5 : 34.65 
+
+Wierzcho³ek 6 nie wystêpuje w grafie. 
+
+Wierzcho³ek pocz¹tkowy: 12
+12 -> 3 : 4.5 
+12 -> 3 -> 2 : 59 
+12 -> 3 -> 2 -> 5 : 93.65 
+

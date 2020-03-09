@@ -1,0 +1,20 @@
+Wierzcho³ek pocz¹tkowy: 5
+5 -> 6 : 2 
+5 -> 3 -> 2 : 11 
+5 -> 3 : 8 
+5 -> 3 -> 2 -> 8 : 16 
+
+Wierzcho³ek 12 nie wystêpuje w grafie. 
+
+Wierzcho³ek pocz¹tkowy: 3
+3 -> 5 : 8 
+3 -> 5 -> 6 : 10 
+3 -> 2 : 3 
+3 -> 2 -> 8 : 8 
+
+Wierzcho³ek pocz¹tkowy: 6
+6 -> 5 : 2 
+6 -> 5 -> 3 -> 2 : 13 
+6 -> 5 -> 3 : 10 
+6 -> 5 -> 3 -> 2 -> 8 : 18 
+
