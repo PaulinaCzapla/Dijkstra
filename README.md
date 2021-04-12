@@ -1,5 +1,4 @@
 # Dijkstra
-
 Projekt semestralny zrealizowany w ramach zajęć z Podstaw Programowwania Komputerów.
 Tematem projektu jest stworzenie programu, do znajdowania najkrótszych ścieżek między zadanym wierzchołkiem grafu, a wszystkimi pozostałymi wierzchołkami. Program wykorzystuje algorytm Dijkstry oraz wykorzystuje samodzielnie zaimplementowaną strukturę dynamiczną.
 
