@@ -6,6 +6,7 @@ Tematem projektu jest stworzenie programu, do znajdowania najkrótszych ścieże
 Pliki wejściowe:
 - plik z grafem;
 - plik z numerami wierzchołków.
+
 W pliku wynikowym zapisane zostają trasy o minimalnej długości dla zadanych wierzchołków.
 
 Program uruchamiany jest z linii poleceń z wykorzystaniem następujących przełączników (kolejność przełączników jest dowolna):
