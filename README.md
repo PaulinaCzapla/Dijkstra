@@ -9,6 +9,6 @@ Pliki wejściowe:
 W pliku wynikowym zapisane zostają trasy o minimalnej długości dla zadanych wierzchołków.
 
 Program uruchamiany jest z linii poleceń z wykorzystaniem następujących przełączników (kolejność przełączników jest dowolna):
--g plik wejściowy z grafem;
--w plik wejściowy z wierzchołkami;
--o plik wyjściowy z wynikami.
+- -g plik wejściowy z grafem;
+- -w plik wejściowy z wierzchołkami;
+- -o plik wyjściowy z wynikami.
