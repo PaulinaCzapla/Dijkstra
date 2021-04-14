@@ -3,7 +3,7 @@
 Semester project carried out as part of the Computer Programming Basics classes. The subject of the project was to create a program to find the shortest paths between a given graph vertex and all other vertices, which is done by implementing the Dijkstra algorithm. 
 
 ### How to run
-# Input files
+#### Input files
 - graph file;
 - vertices file.
 
