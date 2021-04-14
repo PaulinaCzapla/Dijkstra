@@ -11,9 +11,5 @@ Semester project carried out as part of the Computer Programming Basics classes.
 djikstra.exe -g graph.txt -w verticies.txt -o output.txt
 ```
 
-W pliku wynikowym zapisane zostają trasy o minimalnej długości dla zadanych wierzchołków.
+Routes with the minimum length for the given vertices are saved in the result file.
 
-Program uruchamiany jest z linii poleceń z wykorzystaniem następujących przełączników (kolejność przełączników jest dowolna):
-- -g plik wejściowy z grafem;
-- -w plik wejściowy z wierzchołkami;
-- -o plik wyjściowy z wynikami.
