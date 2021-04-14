@@ -11,30 +11,8 @@ bool przelaczniki(int argc, char* argv[])
 		int sprawdzenie = 0;
 		bool g = 0, w = 0, o = 0;
 
-		for (int i = 1; i < argc; i += 2)  // 1 3 5 miejsca w tablicy dla przelacznikow
-		{
-			if (string(argv[i]) == "-g" && g == 0)
-			{
-				graf_wejsciowy = argv[i + 1];
-				sprawdzenie++;
-				g = 1;
-				continue;
-			}
-			if (string(argv[i]) == "-w" && w == 0)
-			{
-				wierzch_wejsciowy = argv[i + 1];
-				sprawdzenie++;
-				w = 1;
-				continue;
-			}
-			if (string(argv[i]) == "-o" && o == 0)
-			{
-				wyniki_wyjsciowy = argv[i + 1];
-				sprawdzenie++;
-				o = 1;
-				continue;
-			}
-		}
+		parsuj_przelaczniki(argc, argv, g, graf_wejsciowy, sprawdzenie, w, wierzch_wejsciowy, o, wyniki_wyjsciowy);
+
 		if (sprawdzenie != 3)
 		{
 			cout << " \n Podano nieprawidlowe argumenty. \n";
@@ -60,6 +38,34 @@ bool przelaczniki(int argc, char* argv[])
 		cout << " \n Podano nieprawidlowe argumenty. \n";
 		cout << "    dijkstra.exe -  nazwa pliku \n - g <nazwa.txt> -  plik wejsciowy z grafem \n - w <nazwa.txt> -  plik wejsciowy z wierzcholkami \n - o <nazwa.txt> -  plik wyjsciowy z wynikami \n";
 		return false;
+	}
+}
+
+void parsuj_przelaczniki(int argc, char* argv[], bool& g, std::string& graf_wejsciowy, int& sprawdzenie, bool& w, std::string& wierzch_wejsciowy, bool& o, std::string& wyniki_wyjsciowy)
+{
+	for (int i = 1; i < argc; i += 2)
+	{
+		if (string(argv[i]) == "-g" && g == 0)
+		{
+			graf_wejsciowy = argv[i + 1];
+			sprawdzenie++;
+			g = 1;
+			continue;
+		}
+		if (string(argv[i]) == "-w" && w == 0)
+		{
+			wierzch_wejsciowy = argv[i + 1];
+			sprawdzenie++;
+			w = 1;
+			continue;
+		}
+		if (string(argv[i]) == "-o" && o == 0)
+		{
+			wyniki_wyjsciowy = argv[i + 1];
+			sprawdzenie++;
+			o = 1;
+			continue;
+		}
 	}
 }
 
@@ -289,47 +295,53 @@ element_LZ* wczytaj_graf(ifstream& plik)
 		else
 			skier = false;
 
-		if (znajdzLZ(wierzch1, poczatek) == nullptr)
-		{
-			if (sprawdzenie == false)
-			{
-				p = dodaj_elementLZ(wierzch1);
-				poczatek = p;
+		buduj_graf(wierzch1, poczatek, sprawdzenie, p, waga, wierzch2, skier, pomoc);
 
-				dodaj_polaczenie(p, waga, wierzch2, skier);
-			}
-			else
-			{
-				dodaj_wezelLZ(p, wierzch1);
-				dodaj_polaczenie(p, waga, wierzch2, skier);
-			}
-		}
-		else
-		{
-			pomoc = znajdzLZ(wierzch1, poczatek); //zwraca wskaznik na LZ
-			dodaj_polaczenie(pomoc, waga, wierzch2, skier);
-		}
-
-		if (znajdzLZ(wierzch2, poczatek) == nullptr)
-		{
-			dodaj_wezelLZ(p, wierzch2);
-
-			if (skier == false)
-			{
-				dodaj_polaczenie(p, waga, wierzch1, skier);
-			}
-		}
-		else
-		{
-			if (skier == false)
-			{
-				pomoc = znajdzLZ(wierzch2, poczatek); //zwraca wskaznik na LZ
-				dodaj_polaczenie(pomoc, waga, wierzch1, skier);
-			}
-		}
 		sprawdzenie = true;
 	}
 	return poczatek;
+}
+
+void buduj_graf(int wierzch1, element_LZ*& poczatek, bool sprawdzenie, element_LZ*& p, double waga, int wierzch2, bool skier, element_LZ*& pomoc)
+{
+	if (znajdzLZ(wierzch1, poczatek) == nullptr)
+	{
+		if (sprawdzenie == false)
+		{
+			p = dodaj_elementLZ(wierzch1);
+			poczatek = p;
+
+			dodaj_polaczenie(p, waga, wierzch2, skier);
+		}
+		else
+		{
+			dodaj_wezelLZ(p, wierzch1);
+			dodaj_polaczenie(p, waga, wierzch2, skier);
+		}
+	}
+	else
+	{
+		pomoc = znajdzLZ(wierzch1, poczatek); //zwraca wskaznik na LZ
+		dodaj_polaczenie(pomoc, waga, wierzch2, skier);
+	}
+
+	if (znajdzLZ(wierzch2, poczatek) == nullptr)
+	{
+		dodaj_wezelLZ(p, wierzch2);
+
+		if (skier == false)
+		{
+			dodaj_polaczenie(p, waga, wierzch1, skier);
+		}
+	}
+	else
+	{
+		if (skier == false)
+		{
+			pomoc = znajdzLZ(wierzch2, poczatek); //zwraca wskaznik na LZ
+			dodaj_polaczenie(pomoc, waga, wierzch1, skier);
+		}
+	}
 }
 
 void wyczysc_dane(element_LZ* p)
@@ -477,26 +489,7 @@ void wczytaj_sciezke(int numer, element_LZ*& glowa, bool czy_wystepuje, ofstream
 		{
 			tmp = wierzcholek;
 
-			if (wierzcholek->pierwszy_wierzcholek != numer)
-			{
-				if (tmp != nullptr)
-				{
-					while (tmp != nullptr)
-					{
-						if (spr == 0)
-						{
-							glowa_sciezki = dodaj_wezel(tmp->pierwszy_wierzcholek, tmp->droga);
-							sciezka_tmp = glowa_sciezki;
-							spr = 1;					//zmienna spr informuje o tym, czy w liście ścieżka już jest jakiś węzeł
-						}
-						else
-						{
-							dodaj_wierzcholek(glowa_sciezki, tmp->pierwszy_wierzcholek, tmp->droga);
-						}
-						tmp = tmp->poprzedni_wierzcholek;
-					}
-				}
-			}
+			dodaj_wezel_do_sciezki(wierzcholek, numer, tmp, spr, glowa_sciezki, sciezka_tmp);
 
 			spr = 0;									//zerowanie zmiennej spr, ponieważ w następnej pętli będzie rozpatrywana ścieżka do innego wierzchołka i lista zostanie usunięta
 
@@ -504,19 +497,8 @@ void wczytaj_sciezke(int numer, element_LZ*& glowa, bool czy_wystepuje, ofstream
 			double waga = 0;
 			constexpr int nieskonczonosc = numeric_limits<int>::max();
 
-			while (tmp_sciezka != nullptr)				//wczytywanie listy ścieżka do pliku
-			{
-				waga = tmp_sciezka->waga;
+			zapisz_liste_do_pliku(tmp_sciezka, waga, nieskonczonosc, plik);
 
-				if (waga == nieskonczonosc)
-					break;
-
-				plik << tmp_sciezka->wierzcholek;
-				tmp_sciezka = tmp_sciezka->nastepny;
-
-				if (tmp_sciezka != nullptr)
-					plik << " -> ";
-			}
 			if (waga != 0 && waga != nieskonczonosc)
 			{
 				plik << " : ";
@@ -531,52 +513,43 @@ void wczytaj_sciezke(int numer, element_LZ*& glowa, bool czy_wystepuje, ofstream
 	plik << "\n";
 }
 
+void zapisz_liste_do_pliku(sciezka*& tmp_sciezka, double& waga, const int& nieskonczonosc, std::ofstream& plik)
+{
+	while (tmp_sciezka != nullptr)				//wczytywanie listy ścieżka do pliku
+	{
+		waga = tmp_sciezka->waga;
 
-//
-//void wyswietlLW(element_LZ* poczatek)
-//{
-//	element_LW* pom;
-//	if (poczatek != nullptr)
-//		pom = poczatek->polaczenie;
-//	else
-//	{
-//		return;
-//	}
-//
-//	while (poczatek)
-//	{
-//		pom = poczatek->polaczenie;
-//
-//		if (poczatek == nullptr)
-//			return;
-//
-//		cout << poczatek->pierwszy_wierzcholek << "    " << poczatek->droga << "        ";
-//
-//		if (poczatek->poprzedni_wierzcholek != nullptr)
-//			cout << " poprzedni:" << poczatek->poprzedni_wierzcholek->pierwszy_wierzcholek << "        ";
-//
-//		while (pom)
-//		{
-//			if (pom == nullptr)
-//				return;
-//
-//			cout << pom->wierzcholek << " " << pom->wartosc << "        ";
-//			pom = pom->nastepny;
-//		}
-//		poczatek = poczatek->nastepny;
-//		cout << endl;
-//	}
-//}
+		if (waga == nieskonczonosc)
+			break;
 
-//void wyswietl(sciezka* poczatek)
-//{
-//
-//	while (poczatek != nullptr)
-//	{
-//
-//		cout << poczatek->wierzcholek;
-//		poczatek = poczatek->nastepny;
-//		cout << endl;
-//	}
-//
-//}
+		plik << tmp_sciezka->wierzcholek;
+		tmp_sciezka = tmp_sciezka->nastepny;
+
+		if (tmp_sciezka != nullptr)
+			plik << " -> ";
+	}
+}
+
+void dodaj_wezel_do_sciezki(element_LZ* wierzcholek, int numer, element_LZ*& tmp, bool& spr, sciezka*& glowa_sciezki, sciezka*& sciezka_tmp)
+{
+	if (wierzcholek->pierwszy_wierzcholek != numer)
+	{
+		if (tmp != nullptr)
+		{
+			while (tmp != nullptr)
+			{
+				if (spr == 0)
+				{
+					glowa_sciezki = dodaj_wezel(tmp->pierwszy_wierzcholek, tmp->droga);
+					sciezka_tmp = glowa_sciezki;
+					spr = 1;					//zmienna spr informuje o tym, czy w liście ścieżka już jest jakiś węzeł
+				}
+				else
+				{
+					dodaj_wierzcholek(glowa_sciezki, tmp->pierwszy_wierzcholek, tmp->droga);
+				}
+				tmp = tmp->poprzedni_wierzcholek;
+			}
+		}
+	}
+}

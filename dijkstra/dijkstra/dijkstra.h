@@ -150,4 +150,14 @@ bool szukaj_drogi(string wierzcholki, string graf, string wyniki);
 @param wyniki referencja na plik wyjœciowy na wyniki.
 */
 void wczytaj_sciezke(int numer, element_LZ*& glowa, bool czy_wystepuje, ofstream& wyniki);
+
+void zapisz_liste_do_pliku(sciezka*& tmp_sciezka, double& waga, const int& nieskonczonosc, std::ofstream& plik);
+
+void dodaj_wezel_do_sciezki(element_LZ* wierzcholek, int numer, element_LZ*& tmp, bool& spr, sciezka*& glowa_sciezki, sciezka*& sciezka_tmp);
+
+void parsuj_przelaczniki(int argc, char* argv[], bool& g, std::string& graf_wejsciowy, int& sprawdzenie, bool& w, std::string& wierzch_wejsciowy, bool& o, std::string& wyniki_wyjsciowy);
+
+void buduj_graf(int wierzch1, element_LZ*& poczatek, bool sprawdzenie, element_LZ*& p, double waga, int wierzch2, bool skier, element_LZ*& pomoc);
+
+
 #endif
