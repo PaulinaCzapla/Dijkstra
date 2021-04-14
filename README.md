@@ -7,6 +7,10 @@ Semester project carried out as part of the Computer Programming Basics classes.
 - graph file;
 - vertices file.
 
+```
+djikstra.exe -g graph.txt -w verticies.txt -o output.txt
+```
+
 W pliku wynikowym zapisane zostają trasy o minimalnej długości dla zadanych wierzchołków.
 
 Program uruchamiany jest z linii poleceń z wykorzystaniem następujących przełączników (kolejność przełączników jest dowolna):
